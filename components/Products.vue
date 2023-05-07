@@ -1,7 +1,15 @@
 <template>
   <v-row>
     <v-row>
-      <v-col cols="10"> Search </v-col>
+      <v-col cols="10">
+        <v-autocomplete
+          label="Products"
+          placeholder="Start typing to search"
+          :search-input.sync="search"
+          :loading="isLoading"
+        >
+        </v-autocomplete>
+      </v-col>
       <v-col cols="2">
         <v-menu>
           <template v-slot:activator="{ on: category }">
@@ -159,6 +167,8 @@ export default {
           categoryId: 3,
         },
       ],
+      search: null,
+      isLoading: false,
     }
   },
   computed: {
@@ -169,6 +179,15 @@ export default {
         )
       }
       return this.products
+    },
+  },
+  watch: {
+    search(val) {
+      console.log(val)
+      this.isLoading = true
+      setTimeout(() => {
+        this.isLoading = false
+      }, 1000)
     },
   },
 }
